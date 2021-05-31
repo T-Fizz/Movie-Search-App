@@ -1,0 +1,7 @@
+.search-bar-container-with-results {
+    display: flex;
+    align-items: center;
+    padding-top: 0%;
+    padding-inline: 0%;
+    justify-content: center;
+}
