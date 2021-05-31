@@ -49,7 +49,7 @@ class Search extends React.Component {
     handleChange(event) {
         this.setState({
             isEmpty: event.target.value.trim().length === 0,
-            queryURI: BASE_API_URI + "&s=" + event.target.value.split(' ').join('+')
+            queryURI: BASE_API_URI + "&s=" + event.target.value.trim().split(' ').join('+')
         });
     }
 
@@ -243,7 +243,9 @@ class ResultsList extends React.Component {
                             />
                         </div>}
                 </div>
-                <h4>{this.state.status}</h4>
+                <div className="results-status-container">
+                    {this.state.fulfilled !== true && <h3 className="results-status">{this.state.status}</h3>}
+                </div>
                 {(this.state.fulfilled === true) && (
                     this.state.results.map((result) => (
                         <div key={result.imdbID}>
@@ -262,38 +264,14 @@ class ResultsList extends React.Component {
     }
 }
 
-class SearchApp extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            stylePath: "./style1.css"
-        }
-        //map page to results, "page#" : [arr of results on pg] 
-        this.handleStyleChange = this.handleStyleChange.bind(this);
-    }
-
-    //style changes when results are received
-    handleStyleChange(hasReceivedResults) {
-        if (hasReceivedResults === true) {
-            this.setState({
-                stylePath: "./style1.css"
-            })
-        } else {
-            this.setState({
-                stylePath: "./style2.css"
-            })
-        }
-    }
-
-    render() {
-        return (
-            <div>
-                <link rel="stylesheet" href={this.state.stylePath} />
-                <ResultsList onResults={isLandingPage => this.handleStyleChange(isLandingPage)}>
-                </ResultsList>
-            </div>
-        );
-    }
+function SearchApp() {
+    return (
+        <div>
+            <ResultsList >
+            </ResultsList>
+        </div>
+    );
 }
+
 
 ReactDOM.render(<SearchApp />, document.getElementById("root"));
