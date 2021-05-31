@@ -5,7 +5,7 @@ import PlaceholderImage from './img-placeholder.png';
 import './style1.css';
 import './style2.css';
 
-const BASE_API_URI = "http://www.omdbapi.com/?apikey=dc24cbd7";
+const BASE_API_URI = "https://www.omdbapi.com/?apikey=dc24cbd7";
 
 class Search extends React.Component {
     constructor(props) {
