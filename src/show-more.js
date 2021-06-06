@@ -46,7 +46,7 @@ class ShowMore extends React.Component {
                       onMouseOver={this.handleOnMouseOver}
                       onMouseOut={this.handleOnMouseOut}
                   >
-                      🠗 Show More Results 🠗
+                      (Show More Results)
                   </button>
               </div>
     )

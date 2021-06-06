@@ -159,6 +159,10 @@ class ResultsList extends React.Component {
                               onPageChange={this.goToPage.bind(this)}
                           />
                       </div>}
+                      {this.state.fulfilled === true &&
+                      <p id="foot-note">
+                        {'"-" represents unavailable information.'}
+                      </p>}
 
               </div>
     )

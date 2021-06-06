@@ -140,6 +140,7 @@ padding: 2px;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 0px;
 }
 
 .pagination-container { 
@@ -165,4 +166,8 @@ padding: 2px;
     background-color: white;
     border: none;
     text-decoration: underline;
+}
+
+#foot-note {
+    font-size: smaller;
 }
