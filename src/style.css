@@ -1,12 +1,12 @@
 .html {
-    font-family: comic sans, Comic Sans MS, Arial, Helvetica, sans-serif;
+    font-family: Comic Sans, Arial, Helvetica, sans-serif;
 }
 button {
-    font-family: comic sans, Comic Sans MS, Arial, Helvetica, sans-serif;
+    font-family: Comic Sans, Arial, Helvetica, sans-serif;
 }
 
 label {
-    font-family: comic sans, Comic Sans MS, Arial, Helvetica, sans-serif;
+    font-family: Comic Sans, Arial, Helvetica, sans-serif;
 }
 
 .search-header {
@@ -23,7 +23,7 @@ label {
 
 .search-bar-container {
     display: flex;
-    align-items: center;
+    align-items: stretch;
     padding-top: 30vh;
     padding-inline: 0%;
     justify-content: center;
@@ -51,12 +51,14 @@ label > .br {
 .search-bar-container > .search-bar > form > .search-input-container {
     display: flex;
     justify-content: center;
+    align-items: stretch;
     height: 30px;
     font-size: 24px;
 }
 
 .search-bar-container-with-results > .search-bar > form > .search-input-container {
     display: flex;
+    justify-content: center;
     align-items: stretch;
     height: 24px;
     font-size: 18px;
@@ -64,26 +66,32 @@ label > .br {
 
 .search-bar-container > .search-bar > form > .search-input-container > input {
     display: flex;
+    justify-content: center;
+    align-items: stretch;
     font-size: 20px;
     max-width: 60vw;
 }
 
 .search-bar-container-with-results > .search-bar > form > .search-input-container > input {
     display: flex;
-    font-size: 20px;
+    justify-content: center;
+    align-items: stretch;
+    font-size: 16px;
     max-width: 40vw;
 }
 
 .search-bar-container > .search-bar > form > .search-input-container > button {
     display: flex;
-    align-items: center;
+    justify-content: center;
+    align-items: stretch;
     font-size: 14px;
     max-width: 15vw;
 }
 
 .search-bar-container-with-results > .search-bar > form > .search-input-container > button {
     display: flex;
-    align-items: center;
+    justify-content: center;
+    align-items: stretch;
     font-size: 14px;
     max-width: 15vw;
 }
