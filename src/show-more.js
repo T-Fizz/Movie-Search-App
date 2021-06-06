@@ -8,12 +8,15 @@ import PropTypes from 'prop-types'
 class ShowMore extends React.Component {
   constructor (props) {
     super(props)
-    this.buttonStyles = ['show-more', 'show-more-hovering']
+    this.buttonStyles = ['show-more', 'show-more-hovering', 'show-more-invisible']
+
+    console.log('Show more was generated')
 
     this.state = {
       pagesRemaining: this.props.pagesRemaining,
       buttonStyle: 0
     }
+
     this.handleOnClick = this.handleOnClick.bind(this)
     this.handleOnMouseOver = this.handleOnMouseOver.bind(this)
     this.handleOnMouseOut = this.handleOnMouseOut.bind(this)
@@ -21,7 +24,7 @@ class ShowMore extends React.Component {
 
   handleOnClick (event) {
     if (this.props.onClick) {
-      this.props.onClick(event)
+      this.props.onClick()
     }
   }
 
@@ -56,7 +59,8 @@ class ShowMore extends React.Component {
 // props type checking
 ShowMore.propTypes = {
   onClick: PropTypes.func,
-  pagesRemaining: PropTypes.number
+  pagesRemaining: PropTypes.number,
+  canLoadMore: PropTypes.bool
 }
 
 export default ShowMore

@@ -16,17 +16,14 @@ class ResultsList extends React.Component {
       fulfilled: false, // more results
       status: null, // 'true' or 'false' for results of api fetch
       results: [],
-      totalResults: 0
+      totalResults: 0,
+      canLoadMore: false
     }
   }
 
   goToPage (data) {
     // change state so page doesn't have show more or paginate
     // components on page until after results are loaded
-    this.setState({
-      fulfilled: false,
-      status: 'loading'
-    })
 
     console.log(data)
     const selected = data.selected + 1
@@ -39,14 +36,16 @@ class ResultsList extends React.Component {
 
     this.setState({
       currentPage: selected,
-      results: [] // result list (show as new page)
+      results: [], // result list (show as new page)
+      status: 'loading',
+      showMorePageIterator: 0
     })
 
     console.log(pageURI)
     this.getResults(pageURI)
   }
 
-  getResults (URI) {
+  getResults (URI, append = false) {
     console.log('getting results for list')
     console.log(URI)
     fetch(URI)
@@ -61,12 +60,40 @@ class ResultsList extends React.Component {
             totalResults: 0
           })
         } else {
+          // see if can show more and update state accordingly
+          console.log()
+
+          const currResultCount = 10 * (this.state.currentPage + this.state.showMorePageIterator)
+          let canShowMore
+          if (currResultCount < data.totalResults) {
+            canShowMore = true
+          } else {
+            canShowMore = false
+          }
+          console.log('Current page:' + this.state.currentPage)
+          console.log('page iter:' + this.state.showMorePageIterator)
+          console.log(data.totalResults)
+          console.log(currResultCount)
+          console.log(canShowMore)
+
+          let newResults
+          let newShowMorePageIterator
+          if (append === true) {
+            newResults = this.state.results.concat(data.Search)
+            newShowMorePageIterator = this.state.showMorePageIterator
+          } else {
+            newResults = data.Search
+            newShowMorePageIterator = 0
+          }
+
           this.setState({
             fulfilled: true,
-            status: 'Showing Results:',
-            results: this.state.results.concat(data.Search),
+            status: 'Showing Results',
+            results: newResults,
             totalResults: data.totalResults,
-            resultsURI: URI
+            resultsURI: URI,
+            canLoadMore: canShowMore,
+            showMorePageIterator: newShowMorePageIterator
           })
         }
       },
@@ -84,10 +111,9 @@ class ResultsList extends React.Component {
   }
 
   showMore () {
-    console.log('Showing more')
-    console.log(this.state)
-    // will concatenate results list without resetting like this.goToPage()
-    console.log(this.state.resultsURI)
+    this.setState({
+      status: 'loading'
+    })
 
     const pagesFromCurrent = this.state.showMorePageIterator + 1
     this.setState({
@@ -97,10 +123,21 @@ class ResultsList extends React.Component {
     console.log(pagesFromCurrent + ':' + this.state.showMorePageIterator)
 
     const baseURI = this.state.resultsURI.split('&page=')[0]
-    const pageParam = '&page=' + this.state.currentPage + this.state.showMorePageIterator
+    const pageOffset = this.state.currentPage + this.state.showMorePageIterator + 1
+    const pageParam = '&page=' + pageOffset
     const pageURI = baseURI + pageParam
     console.log(pageURI)
-    this.getResults(pageURI)
+    this.getResults(pageURI, true)
+
+    // see if there is more to load and then pass sentinel for ShowMore comp.
+    const pagesLeft = Math.ceil(this.state.totalResults / 10) -
+        pageOffset
+
+    if (pagesLeft <= 0) {
+      this.setState({
+        canLoadMore: false
+      })
+    }
   }
 
   render () {
@@ -110,16 +147,6 @@ class ResultsList extends React.Component {
                       <Search
                           onSubmit={queryURI => this.getResults(queryURI)}
                       />
-                      {this.state.fulfilled === true &&
-                          <div className='paginate-container'>
-                              <ReactPaginate
-                                  containerClassName='pagination'
-                                  pageCount={Math.ceil(this.state.totalResults / 10)}
-                                  pageRangeDisplayed={5}
-                                  marginPagesDisplayed={2}
-                                  onPageChange={this.goToPage.bind(this)}
-                              />
-                          </div>}
                   </div>
 
                   <div className='results-status-container'>
@@ -140,9 +167,10 @@ class ResultsList extends React.Component {
                     ))
                   )}
 
-                  {(this.state.fulfilled === true) && (
+                  {(this.state.canLoadMore === true) && (
                       <ShowMore
                           onClick={this.showMore.bind(this)}
+                          canLoadMore={this.state.canLoadMore}
                           pagesRemaining={
                               Math.ceil(this.state.totalResults / 10) - this.state.currentPage
                           }

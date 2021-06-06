@@ -62,14 +62,16 @@ class Search extends React.Component {
                               Movie Search
                           </label>
                           <br />
-                          <input
-                              placeholder={this.exampleMovie}
-                              onChange={this.handleChange}
-                              value={this.state.query}
-                          />
-                          <button>
-                              Search
-                          </button>
+                           <div className="search-input-container">
+                           <input
+                               placeholder={this.exampleMovie}
+                                onChange={this.handleChange}
+                               value={this.state.query}
+                            />
+                            <button>
+                                Search
+                            </button>
+                          </div>
                       </form>
                   </div>
               </div>
