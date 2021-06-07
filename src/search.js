@@ -5,13 +5,13 @@ import BASE_API_URI from './base-api-uri'
 
 const EXAMPLE_MOVIES = ExampleMovies.movies
 
-/* SEARCH BAR */
+// This component represents the searchbar
 class Search extends React.Component {
   constructor (props) {
     super(props)
 
     this.state = {
-      searchBarContainerClassName: 'search-bar-container',
+      searchBarContainerClassName: 'search-bar-container', // changes on results
       isEmpty: true,
       queryURI: '',
       isSubmitted: false
@@ -25,7 +25,7 @@ class Search extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  // user typing updates query params for api
+  // as user types, queryURI is updated for api
   handleChange (event) {
     const quri = BASE_API_URI +
               '&s=' + event.target.value.trim().split(' ').join('+') +
@@ -37,20 +37,18 @@ class Search extends React.Component {
     })
   }
 
-  // request on submit
+  // handles user clicking "search" button
   handleSubmit (event) {
     event.preventDefault()
     const searchURI = this.state.queryURI
 
-    // get JSON from api using searchURI, parse and fill
+    // callsback the onSubmit from parent component ResultsList to get results
     if (!this.state.isEmpty && this.props.onSubmit) {
       this.props.onSubmit(searchURI)
-      console.log('passed uri using props function')
       this.setState({
         searchBarContainerClassName: 'search-bar-container-with-results'
       })
     }
-    console.log(searchURI)
   }
 
   render () {

@@ -1,11 +1,14 @@
 import React from 'react'
 import ReactPaginate from 'react-paginate'
 import PropTypes from 'prop-types'
+import 'whatwg-fetch'
 import Search from './search.js'
 import Result from './result.js'
 import ShowMore from './show-more.js'
 
-/* RESULTS LIST (meat of the app) */
+// This component represents the Results List,
+// but is the highest order component in the app.
+// Parent to all other components in app.
 class ResultsList extends React.Component {
   constructor (props) {
     super(props)
@@ -17,22 +20,20 @@ class ResultsList extends React.Component {
       status: null, // 'true' or 'false' for results of api fetch
       results: [],
       totalResults: 0,
-      canLoadMore: false
+      canLoadMore: false // tracks if ShowMore should be visible
     }
   }
 
+  // This is called when user selects page from react-paginate component
   goToPage (data) {
     // change state so page doesn't have show more or paginate
     // components on page until after results are loaded
 
-    console.log(data)
     const selected = data.selected + 1
-    console.log('gotopage' + this.state.resultsURI)
 
     const baseURI = this.state.resultsURI.split('&page=')[0]
     const pageParam = `&page=${selected}`
     const pageURI = baseURI + pageParam
-    console.log('pageURI' + pageURI)
 
     this.setState({
       currentPage: selected,
@@ -41,18 +42,17 @@ class ResultsList extends React.Component {
       showMorePageIterator: 0
     })
 
-    console.log(pageURI)
     this.getResults(pageURI)
   }
 
+  // For obtaining results for any reason, whether from
+  // new page being selected in react-paginate, or using
+  // the ShowMore component to load more on same page.
+  // pass true to concatinate to this.state.results.
   getResults (URI, append = false) {
-    console.log('getting results for list')
-    console.log(URI)
     fetch(URI)
       .then(res => res.json())
       .then(data => {
-        console.log(data)
-
         if (data.Response === 'False') {
           this.setState({
             fulfilled: false,
@@ -60,9 +60,6 @@ class ResultsList extends React.Component {
             totalResults: 0
           })
         } else {
-          // see if can show more and update state accordingly
-          console.log()
-
           const currResultCount = 10 * (this.state.currentPage + this.state.showMorePageIterator)
           let canShowMore
           if (currResultCount < data.totalResults) {
@@ -70,15 +67,10 @@ class ResultsList extends React.Component {
           } else {
             canShowMore = false
           }
-          console.log('Current page:' + this.state.currentPage)
-          console.log('page iter:' + this.state.showMorePageIterator)
-          console.log(data.totalResults)
-          console.log(currResultCount)
-          console.log(canShowMore)
 
           let newResults
           let newShowMorePageIterator
-          if (append === true) {
+          if (append === true) { // concat this.state.results
             newResults = this.state.results.concat(data.Search)
             newShowMorePageIterator = this.state.showMorePageIterator
           } else {
@@ -98,7 +90,7 @@ class ResultsList extends React.Component {
         }
       },
       (error) => {
-        console.log(error)
+        console.error(error)
       }
       )
   }
@@ -106,7 +98,6 @@ class ResultsList extends React.Component {
   onResults () {
     if (this.state.fulfilled && this.props.onResults) {
       this.props.onResults(this.state.fulfilled)
-      console.log('Changed CSS file!')
     }
   }
 
@@ -120,13 +111,10 @@ class ResultsList extends React.Component {
       showMorePageIterator: pagesFromCurrent
     })
 
-    console.log(pagesFromCurrent + ':' + this.state.showMorePageIterator)
-
     const baseURI = this.state.resultsURI.split('&page=')[0]
     const pageOffset = this.state.currentPage + this.state.showMorePageIterator + 1
     const pageParam = '&page=' + pageOffset
     const pageURI = baseURI + pageParam
-    console.log(pageURI)
     this.getResults(pageURI, true)
 
     // see if there is more to load and then pass sentinel for ShowMore comp.
@@ -140,6 +128,7 @@ class ResultsList extends React.Component {
     }
   }
 
+  // render HTML for results list
   render () {
     return (
               <div>

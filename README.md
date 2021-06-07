@@ -1,70 +1,28 @@
-# Getting Started with Create React App
+# Capital One Software Engineering Summit Coding Challenge
+---
+My submission for the summer 2021 Capital One Summit for Engineering Challenge.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The solution is written using the React framework. This allows for easy reusability, as well as easily handling the dynamic nature of loading results and displaying them and their information and the user's interactions with them.
 
-## Available Scripts
+#### The challenge is defined as follows:
+>[Access the API here.](https://www.omdbapi.com/) To complete this challenge, build a web application that:
 
-In the project directory, you can run:
+> 1) Has a search function specifically for movie titles that results in an intuitive, responsive, mobile friendly, interface. The API allows for searches of tv series and episodes as well, but we would like you to focus your app on ONLY movie title searches
 
-### `npm start`
+>2) Once a search has been run and a movie title selected, your web app should be able to bring up additional details about the selected title. These details could include, but are not limited to:
+>- Release date
+>- Runtime
+>- Genre
+>- Director
+>- BONUS - display the movie poster (if available)
+>- BONUS - After running a search, allow users to filter within those results based on a time range. (Ex. if a search yielded 100 results, then only show the titles with release dates from 2000-2010)
+>- BONUS - In addition to using pagination to show results, include a "show more" button so a user can view more than 10 results at a time. This will be especially useful for the bonus deliverable about filtering by time range
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+>NOTE - These categories may not be complete for all results, so your app should be able to handle and display empty values
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+>3) Search results are shown in blocks of 10 titles, so your app should have a pagination feature allowing a user to view multiple pages of results. 
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+>Submissions will be graded on the following criteria:
+>- Meets Deliverables
+>- Creativity/Aesthetics (UI/UX)
+>- Clarity & Code Quality

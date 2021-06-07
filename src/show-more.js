@@ -10,8 +10,6 @@ class ShowMore extends React.Component {
     super(props)
     this.buttonStyles = ['show-more', 'show-more-hovering', 'show-more-invisible']
 
-    console.log('Show more was generated')
-
     this.state = {
       pagesRemaining: this.props.pagesRemaining,
       buttonStyle: 0

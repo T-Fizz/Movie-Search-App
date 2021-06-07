@@ -3,10 +3,13 @@ import Details from './details'
 import PropTypes from 'prop-types'
 import PlaceholderImage from './img-placeholder.png'
 
+// this component represents results from api
+// using "s=(user query)"url param  in search bar.
 class Result extends React.Component {
   constructor (props) {
     super(props)
-    this.titleStyles = ['result-title-no-details', 'result-title-no-details-hovering']
+    this.titleStyles = ['result-title-no-details',
+      'result-title-no-details-hovering']
 
     this.state = {
       wasClicked: false,
@@ -17,6 +20,7 @@ class Result extends React.Component {
     this.handleOnMouseOut = this.handleOnMouseOut.bind(this)
   }
 
+  // result title was clicked
   handleOnClick (event) {
     event.preventDefault()
     this.setState({
@@ -24,18 +28,21 @@ class Result extends React.Component {
     })
   }
 
+  // mouse is over result title
   handleOnMouseOver (event) {
     this.setState({
       titleStyle: 1
     })
   }
 
+  // mouse is not over result title
   handleOnMouseOut (event) {
     this.setState({
       titleStyle: 0
     })
   }
 
+  // render html for (this) result
   render () {
     let resultHTML = (
               <div className='result-no-details-container'>

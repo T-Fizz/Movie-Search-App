@@ -18,12 +18,9 @@ class Details extends React.Component {
 
   // from api get details
   fetchAdditionalDetails () {
-    console.log('getting details for ' + this.props.title)
     fetch(BASE_API_URI + '&i=' + this.props.imdbID)
       .then(res => res.json())
       .then(data => {
-        console.log(data)
-
         if (data.Response === 'false') {
           this.setState({
             status: 'error',
@@ -36,11 +33,10 @@ class Details extends React.Component {
           })
           // format values to user friendly formats
           this.updateValuesToDisplay()
-          console.log('Details Obtained ' + Date.now())
         }
       },
       (error) => {
-        console.log(error)
+        console.error(error)
       }
       )
   }
@@ -49,7 +45,6 @@ class Details extends React.Component {
     // setup date fetched from api for locale of user
     const data = this.state.details
 
-    console.log(this.state.details)
     if (this.state.details === undefined) {
       console.error('DETAILS IS UNDEFINED!')
     } else {
@@ -59,14 +54,12 @@ class Details extends React.Component {
         const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
         const dateSplit = this.state.details.Released.split(' ')
         const day = dateSplit[0]
-        console.log(dateSplit)
         const month = (months.indexOf(dateSplit[1]) + 1 >= 10) ? (months.indexOf(dateSplit[1])) : ('0' + months.indexOf(dateSplit[1]))
         const year = dateSplit[2]
         date = new Date(`${year}-${month}-${day}`)
       }
 
       // handle any missing info from api "N/A"
-      console.log('r: ' + this.state.details.Released)
 
       // plot isn't part of bulleted list so will just omit if unavailable
       data.Plot = this.state.details.Plot !== 'N/A' ? this.state.details.Plot : ''
@@ -80,6 +73,7 @@ class Details extends React.Component {
       data.Language = this.state.details.Language !== 'N/A' ? this.state.details.Language : '-'
       data.Released = this.state.details.Released !== 'N/A' ? date.toLocaleDateString() : '-'
 
+      // change state to match formatted response being complete
       this.setState({
         status: 'true',
         details: data
@@ -87,11 +81,11 @@ class Details extends React.Component {
     }
   }
 
+  // render html for details of corresponding result
   render () {
-    console.log('details render')
     let detailHTML
 
-    // successful fetch of details, show them
+    // display's further details if status is 'true'
     if (this.state.status === 'true') {
       detailHTML = (
                   <div className='details-container'>
@@ -115,7 +109,7 @@ class Details extends React.Component {
                       </div>
                   </div>
       )
-    } else if (this.state.status === 'loading') {
+    } else if (this.state.status === 'loading') { // if still fetching
       detailHTML = (
                   <div className='details-container'>
                       <p className='details-loading'>
@@ -123,7 +117,7 @@ class Details extends React.Component {
                       </p>
                   </div>
       )
-    } else { // error
+    } else { // error fetching
       detailHTML = (
                   <div className='details-container'>
                       <p className='details-error'>

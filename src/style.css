@@ -1,12 +1,13 @@
 .html {
-    font-family: Comic Sans, Arial, Helvetica, sans-serif;
+    font-family: 'Open Sans', sans-serif;
 }
 button {
-    font-family: Comic Sans, Arial, Helvetica, sans-serif;
+    font-family: 'Open Sans', sans-serif;
 }
 
 label {
-    font-family: Comic Sans, Arial, Helvetica, sans-serif;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 500;
 }
 
 .search-header {
@@ -14,7 +15,7 @@ label {
 }
 
 .search-bar-container-with-results {
-    display: flex;
+    display: -webkit-flex;
     align-items: center;
     padding-top: 0%;
     padding-inline: 0%;
@@ -22,7 +23,7 @@ label {
 }
 
 .search-bar-container {
-    display: flex;
+    display: -webkit-flex;
     align-items: stretch;
     padding-top: 30vh;
     padding-inline: 0%;
@@ -30,7 +31,7 @@ label {
 }
 
 .search-bar-container > .search-bar > form > label {
-    display: flex;
+    display: -webkit-flex;
     align-items: center;
     justify-content: center;
     font-size:36px;
@@ -41,7 +42,7 @@ label > .br {
 }
 
 .search-bar-container-with-results > .search-bar > form > label {
-    display: flex;
+    display: -webkit-flex;
     align-items: center;
     justify-content: center;
     font-size: 28px;
@@ -49,7 +50,7 @@ label > .br {
 }
 
 .search-bar-container > .search-bar > form > .search-input-container {
-    display: flex;
+    display: -webkit-flex;
     justify-content: center;
     align-items: stretch;
     height: 30px;
@@ -57,7 +58,7 @@ label > .br {
 }
 
 .search-bar-container-with-results > .search-bar > form > .search-input-container {
-    display: flex;
+    display: -webkit-flex;
     justify-content: center;
     align-items: stretch;
     height: 24px;
@@ -65,7 +66,7 @@ label > .br {
 }
 
 .search-bar-container > .search-bar > form > .search-input-container > input {
-    display: flex;
+    display: -webkit-flex;
     justify-content: center;
     align-items: stretch;
     font-size: 20px;
@@ -73,7 +74,7 @@ label > .br {
 }
 
 .search-bar-container-with-results > .search-bar > form > .search-input-container > input {
-    display: flex;
+    display: -webkit-flex;
     justify-content: center;
     align-items: stretch;
     font-size: 16px;
@@ -81,17 +82,17 @@ label > .br {
 }
 
 .search-bar-container > .search-bar > form > .search-input-container > button {
-    display: flex;
+    display: -webkit-flex;
     justify-content: center;
-    align-items: stretch;
+    align-items: center;
     font-size: 14px;
     max-width: 15vw;
 }
 
 .search-bar-container-with-results > .search-bar > form > .search-input-container > button {
-    display: flex;
+    display: -webkit-flex;
     justify-content: center;
-    align-items: stretch;
+    align-items: center;
     font-size: 14px;
     max-width: 15vw;
 }
@@ -119,7 +120,7 @@ padding: 2px;
 }
 
 .result {
-    display: flex;
+    display: -webkit-flex;
     justify-content: space-between;
     margin-top: 8px;
     margin-bottom: 8px;
@@ -127,14 +128,14 @@ padding: 2px;
 }
 
 .results-status {
-    display: flex;
+    display: -webkit-flex;
     justify-content:center;
     font-size: 32px;
     color: black;
 }
 
 .result-title {
-    padding: 6px;
+    padding-left: 0px;
     padding-top: 0px;
     padding-bottom: 0px;
     font-size: x-large;
@@ -146,29 +147,23 @@ padding: 2px;
     padding-bottom: 50px
 }
 
-.result-no-details {
-    display: inline;
-}
-
 .result-title-no-details-hovering {
-    display: flex;
+    display: -webkit-flex;
     text-align: left;
-    font-family: comic sans;
     font-size: x-large;
     background-color: white;
     margin: 0px;
     text-decoration: underline;
-    color: black;
+    color: rgb(51,102,187);
     border: none;
 }
 
 .result-title-no-details {
-    display: flex;
+    display: -webkit-flex;
     text-align: left;
-    font-family: comic sans;
     font-size: x-large;
     background-color: white;
-    color: black;
+    color: rgb(51,102,187);
     border: none;
 }
 
@@ -176,6 +171,7 @@ padding: 2px;
     font-size: 80%;
     margin: 0px;
     padding-left: 4px;
+    color: rgb(110,110,110);
 }
 
 .result-info > :not(.result-title) {
@@ -200,7 +196,7 @@ padding: 2px;
 }
 
 .pagination > li {
-    display: flex;
+    display: -webkit-flex;
     list-style: none;
     padding: 6px;
     background-color: rgb(224, 224, 224);
@@ -208,20 +204,20 @@ padding: 2px;
 }
 
 .pagination {
-    display: flex;
+    display: -webkit-flex;
     align-items: center;
     justify-content: center;
     padding: 0px;
 }
 
 .pagination-container { 
-    display: flex;
+    display: -webkit-flex;
     align-items: center;
     justify-content: center;
 }
 
 .show-more-container {
-    display: flex;
+    display: -webkit-flex;
     align-items: center;
     justify-content: center;
 }
