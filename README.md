@@ -1,8 +1,8 @@
 # Capital One Software Engineering Summit Coding Challenge
 ---
-My submission for the summer 2021 Capital One Summit for Engineering Challenge.
+This is my submission for the summer 2021 Capital One Summit for Engineering Challenge.
 
-The solution is written using the React framework. This allows for easy reusability, as well as easily handling the dynamic nature of loading results and displaying them and their information and the user's interactions with them.
+The solution is written using the React framework. This allows for easy reusability, as well as easily handling the dynamic nature of loading results and displaying them and their information and the user's interactions with them. I also wanted to take this opportunity to learn react so I chose react as the framework based on that also.
 
 #### The challenge is defined as follows:
 >[Access the API here.](https://www.omdbapi.com/) To complete this challenge, build a web application that:
