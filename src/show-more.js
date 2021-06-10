@@ -40,16 +40,16 @@ class ShowMore extends React.Component {
 
   render () {
     return (
-              <div className='show-more-container'>
-                  <button
-                      className={this.buttonStyles[this.state.buttonStyle]} id='show-more'
-                      onClick={this.handleOnClick}
-                      onMouseOver={this.handleOnMouseOver}
-                      onMouseOut={this.handleOnMouseOut}
-                  >
-                      (Show More Results)
-                  </button>
-              </div>
+      <div className='show-more-container'>
+        <button
+          className={this.buttonStyles[this.state.buttonStyle]} id='show-more'
+          onClick={this.handleOnClick}
+          onMouseOver={this.handleOnMouseOver}
+          onMouseOut={this.handleOnMouseOut}
+        >
+          (Show More Results)
+        </button>
+      </div>
     )
   }
 }
@@ -58,7 +58,8 @@ class ShowMore extends React.Component {
 ShowMore.propTypes = {
   onClick: PropTypes.func,
   pagesRemaining: PropTypes.number,
-  canLoadMore: PropTypes.bool
+  canLoadMore: PropTypes.bool,
+  visibleResultCount: PropTypes.number
 }
 
 export default ShowMore

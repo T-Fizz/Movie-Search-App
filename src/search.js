@@ -39,40 +39,47 @@ class Search extends React.Component {
 
   // handles user clicking "search" button
   handleSubmit (event) {
-    event.preventDefault()
-    const searchURI = this.state.queryURI
+    if (!this.state.isEmpty) {
+      event.preventDefault()
+      const searchURI = this.state.queryURI
 
-    // callsback the onSubmit from parent component ResultsList to get results
-    if (!this.state.isEmpty && this.props.onSubmit) {
-      this.props.onSubmit(searchURI)
-      this.setState({
-        searchBarContainerClassName: 'search-bar-container-with-results'
-      })
+      // callsback the onSubmit from parent component ResultsList to get results
+      if (this.props.onSubmit) {
+        this.props.onSubmit(searchURI)
+        this.setState({
+          searchBarContainerClassName: 'search-bar-container-with-results'
+        })
+      }
     }
+  }
+
+  goToLandingPage () {
+    // just refreshes so app reloads and landing page is displayed
+    window.location.reload()
   }
 
   render () {
     return (
-              <div className={this.state.searchBarContainerClassName}>
-                  <div className='search-bar'>
-                      <form onSubmit={this.handleSubmit}>
-                          <label htmlFor='search-query'>
-                              Movie Search
-                          </label>
-                          <br />
-                           <div className="search-input-container">
-                           <input
-                               placeholder={this.exampleMovie}
-                                onChange={this.handleChange}
-                               value={this.state.query}
-                            />
-                            <button>
-                                Search
-                            </button>
-                          </div>
-                      </form>
-                  </div>
-              </div>
+      <div className={this.state.searchBarContainerClassName}>
+        <div className='search-bar'>
+          <form onSubmit={this.handleSubmit}>
+            <label htmlFor='search-query' onClick={this.goToLandingPage}>
+              Movie Search
+            </label>
+            <br />
+            <div className="search-input-container">
+              <input
+                placeholder={this.exampleMovie}
+                onChange={this.handleChange}
+                value={this.state.query}
+              />
+              <button>
+                Search
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
     )
   }
 }

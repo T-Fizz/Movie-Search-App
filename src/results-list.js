@@ -5,10 +5,14 @@ import 'whatwg-fetch'
 import Search from './search.js'
 import Result from './result.js'
 import ShowMore from './show-more.js'
+import FilterRange from './filter-range.js'
 
 // This component represents the Results List,
 // but is the highest order component in the app.
 // Parent to all other components in app.
+const DEFAULT_START_YEAR = 1888
+const DEFAULT_END_YEAR = new Date().getFullYear()
+
 class ResultsList extends React.Component {
   constructor (props) {
     super(props)
@@ -20,7 +24,10 @@ class ResultsList extends React.Component {
       status: null, // 'true' or 'false' for results of api fetch
       results: [],
       totalResults: 0,
-      canLoadMore: false // tracks if ShowMore should be visible
+      canLoadMore: false, // tracks if ShowMore should be visible
+      filterStartYear: DEFAULT_START_YEAR,
+      filterEndYear: DEFAULT_END_YEAR,
+      totalVisibleResults: 0
     }
   }
 
@@ -39,7 +46,9 @@ class ResultsList extends React.Component {
       currentPage: selected,
       results: [], // result list (show as new page)
       status: 'loading',
-      showMorePageIterator: 0
+      showMorePageIterator: 0,
+      filterStartYear: DEFAULT_START_YEAR,
+      filterEndYear: DEFAULT_END_YEAR
     })
 
     this.getResults(pageURI)
@@ -68,6 +77,7 @@ class ResultsList extends React.Component {
             canShowMore = false
           }
 
+          // handle how results are based on appending param
           let newResults
           let newShowMorePageIterator
           if (append === true) { // concat this.state.results
@@ -78,6 +88,7 @@ class ResultsList extends React.Component {
             newShowMorePageIterator = 0
           }
 
+          // update state from results
           this.setState({
             fulfilled: true,
             status: 'Showing Results',
@@ -87,6 +98,7 @@ class ResultsList extends React.Component {
             canLoadMore: canShowMore,
             showMorePageIterator: newShowMorePageIterator
           })
+          this.getTotalVisibleCount(newResults)
         }
       },
       (error) => {
@@ -128,60 +140,108 @@ class ResultsList extends React.Component {
     }
   }
 
+  filterByYear (startYear, endYear) {
+    // make non matching results invisible
+    this.setState({
+      filterStartYear: startYear,
+      filterEndYear: endYear
+    }, function () { this.getTotalVisibleCount(this.state.results) })
+  }
+
+  // pass data from fetch and get how many would be visible
+  getTotalVisibleCount (results) {
+    let count = 0
+    for (let i = 0; i < results.length; i++) {
+      if (results[i].Year >= this.state.filterStartYear &&
+        results[i].Year <= this.state.filterEndYear) {
+        count++
+      }
+    }
+
+    this.setState({
+      totalVisibleResults: count
+    })
+    return count
+  }
+
   // render HTML for results list
   render () {
+    // reset fields upon rendering new page (if needed)
+    let listHTML
+
+    if (this.state.totalVisibleResults !== 0) {
+      listHTML = (
+      <div className="result-list-container">
+      {this.state.fulfilled === true &&
+        this.state.results.map((result) => (
+          <div key={result.imdbID}>
+            <Result
+              img={result.Poster}
+              title={result.Title}
+              type={result.Type}
+              year={parseInt(result.Year, 10)}
+              imdbID={result.imdbID}
+              isVisible={
+                result.Year >= this.state.filterStartYear &&
+                result.Year <= this.state.filterEndYear
+              }
+            />
+          </div>
+        ))}
+      </div>
+      )
+    } else {
+      listHTML = (
+        <div className="result-list-container">
+          <p className="no-results-visible">
+            No results found after filtering. Try using a wider range of years!
+          </p>
+        </div>
+      )
+    }
+
     return (
-              <div>
-                  <div className='search-header'>
-                      <Search
-                          onSubmit={queryURI => this.getResults(queryURI)}
-                      />
-                  </div>
-
-                  <div className='results-status-container'>
-                      {this.state.fulfilled !== true && <h3 className='results-status'>{this.state.status}</h3>}
-                  </div>
-
-                  {(this.state.fulfilled === true) && (
-                    this.state.results.map((result) => (
-                          <div key={result.imdbID}>
-                              <Result
-                                  img={result.Poster}
-                                  title={result.Title}
-                                  type={result.Type}
-                                  year={result.Year}
-                                  imdbID={result.imdbID}
-                              />
-                          </div>
-                    ))
-                  )}
-
-                  {(this.state.canLoadMore === true) && (
-                      <ShowMore
-                          onClick={this.showMore.bind(this)}
-                          canLoadMore={this.state.canLoadMore}
-                          pagesRemaining={
-                              Math.ceil(this.state.totalResults / 10) - this.state.currentPage
-                          }
-                      />
-                  )}
-
-                  {this.state.fulfilled === true &&
-                      <div className='paginate-container'>
-                          <ReactPaginate
-                              containerClassName='pagination'
-                              pageCount={Math.ceil(this.state.totalResults / 10)}
-                              pageRangeDisplayed={5}
-                              marginPagesDisplayed={2}
-                              onPageChange={this.goToPage.bind(this)}
-                          />
-                      </div>}
-                      {this.state.fulfilled === true &&
-                      <p id="foot-note">
-                        {'"-" represents unavailable information.'}
-                      </p>}
-
-              </div>
+      <div>
+        <div className="search-header">
+          <Search onSubmit={(queryURI) => this.getResults(queryURI)} />
+        </div>
+        {this.state.fulfilled === true && (
+          <FilterRange
+            onFilter={(startYear, endYear) => this.filterByYear(startYear, endYear)}
+            startYear={this.state.filterStartYear}
+            endYear={this.state.filterEndYear}
+          />
+        )}
+        <div className="results-status-container">
+          {this.state.fulfilled !== true && (
+            <h3 className="results-status">{this.state.status}</h3>
+          )}
+        </div>
+        {this.state.fulfilled === true && listHTML}
+        {this.state.canLoadMore === true && (
+          <ShowMore
+            onClick={this.showMore.bind(this)}
+            canLoadMore={this.state.canLoadMore}
+            pagesRemaining={
+              Math.ceil(this.state.totalResults / 10) - this.state.currentPage
+            }
+          />
+        )}
+        {this.state.fulfilled === true && (
+          <div className="paginate-container">
+            <ReactPaginate
+              containerClassName="pagination"
+              pageCount={Math.ceil(this.state.totalResults / 10)}
+              pageRangeDisplayed={5}
+              marginPagesDisplayed={2}
+              onPageChange={this.goToPage.bind(this)}
+            />
+          </div>
+        )}
+        {this.state.fulfilled === true && (
+          <p id="foot-note">{'"-" represents unavailable information.'}</p>
+        )}
+      </div>
     )
   }
 }

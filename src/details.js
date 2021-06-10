@@ -60,9 +60,9 @@ class Details extends React.Component {
       }
 
       // handle any missing info from api "N/A"
-
       // plot isn't part of bulleted list so will just omit if unavailable
       data.Plot = this.state.details.Plot !== 'N/A' ? this.state.details.Plot : ''
+      data.Director = this.state.details.Director !== 'N/A' ? this.state.details.Director : '-'
       data.Actors = this.state.details.Actors !== 'N/A' ? this.state.details.Actors : '-'
       data.Production = this.state.details.Production !== 'N/A' ? this.state.details.Production : '-'
       data.imdbRating = this.state.details.imdbRating !== 'N/A' ? this.state.details.imdbRating : '-'
@@ -88,42 +88,43 @@ class Details extends React.Component {
     // display's further details if status is 'true'
     if (this.state.status === 'true') {
       detailHTML = (
-                  <div className='details-container'>
-                      <div className='details-top'>
-                          <p className='plot' id='plot'>
-                              {this.state.details.Plot}
-                          </p>
-                      </div>
-                      <div className='details-bottom'>
-                          <ul className='details-list'>
-                              <li><p className='detail-label'>Actors: </p><p>{this.state.details.Actors}</p></li>
-                              <li><p className='detail-label'>Studios: </p><p>{this.state.details.Production}</p></li>
-                              <li><p className='detail-label'>Premiered: </p><p>{this.state.details.Released}</p></li>
-                              <li><p className='detail-label'>IMDB Rating: </p><p>{this.state.details.imdbRating}</p></li>
-                              <li><p className='detail-label'>Genre: </p><p>{this.state.details.Genre}</p></li>
-                              <li><p className='detail-label'>Rating: </p><p>{this.state.details.Rated}</p></li>
-                              <li><p className='detail-label'>Length: </p><p>{this.state.details.Runtime}</p></li>
-                              <li><p className='detail-label'>Country: </p><p>{this.state.details.Country}</p></li>
-                              <li><p className='detail-label'>Language: </p><p>{this.state.details.Language}</p></li>
-                          </ul>
-                      </div>
-                  </div>
+        <div className='details-container'>
+          <div className='details-top'>
+            <p className='plot' id='plot'>
+                {this.state.details.Plot}
+            </p>
+          </div>
+          <div className='details-bottom'>
+            <ul className='details-list'>
+              <li><p className='detail-label'>Director: </p><p>{this.state.details.Director}</p></li>
+              <li><p className='detail-label'>Actors: </p><p>{this.state.details.Actors}</p></li>
+              <li><p className='detail-label'>Studios: </p><p>{this.state.details.Production}</p></li>
+              <li><p className='detail-label'>Premiered: </p><p>{this.state.details.Released}</p></li>
+              <li><p className='detail-label'>IMDB Rating: </p><p>{this.state.details.imdbRating}</p></li>
+              <li><p className='detail-label'>Genre: </p><p>{this.state.details.Genre}</p></li>
+              <li><p className='detail-label'>Rating: </p><p>{this.state.details.Rated}</p></li>
+              <li><p className='detail-label'>Length: </p><p>{this.state.details.Runtime}</p></li>
+              <li><p className='detail-label'>Country: </p><p>{this.state.details.Country}</p></li>
+              <li><p className='detail-label'>Language: </p><p>{this.state.details.Language}</p></li>
+            </ul>
+          </div>
+        </div>
       )
     } else if (this.state.status === 'loading') { // if still fetching
       detailHTML = (
-                  <div className='details-container'>
-                      <p className='details-loading'>
-                          Fetching details...
-                      </p>
-                  </div>
+        <div className='details-container'>
+          <p className='details-loading'>
+            Fetching details...
+          </p>
+        </div>
       )
     } else { // error fetching
       detailHTML = (
-                  <div className='details-container'>
-                      <p className='details-error'>
-                          Something went wrong!
-                      </p>
-                  </div>
+        <div className='details-container'>
+          <p className='details-error'>
+            Something went wrong!
+          </p>
+        </div>
       )
     }
 
